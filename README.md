@@ -1,41 +1,119 @@
-<<<<<<< HEAD
-# ai-reception-childcare
+# AI Front Desk
+
 This product treats the center’s policy records as the trusted source of truth and uses AI to interpret the parent’s question, communicate clearly, and escalate uncertainty rather than pretending it knows more than it does.
-=======
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Problem
 
-First, run the development server:
+Childcare administrators spend large amounts of time answering the same parent questions about hours, pickup, illness, tuition, meals, tours, closures, medication, and enrollment. Parents want fast answers, but the information is often scattered across handbooks, staff knowledge, or legacy documents. Many of these questions are routine, but they are also safety-sensitive and policy-sensitive.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Solution
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This prototype builds a lightweight AI Front Desk for BrightPath Early Learning Center, with two experiences:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Parent experience: ask a question in natural language, browse suggested prompts, use voice input when supported, and receive a concise answer grounded in BrightPath’s policy library.
+- Operator experience: review recent questions, identify unresolved cases, edit the policy knowledge base, and improve the answers based on real usage.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Architecture
 
-## Learn More
+Parent UI
+↓
+Next.js App Router
+↓
+Policy retrieval from current center policy records
+↓
+LLM or deterministic fallback with strict grounding checks
+↓
+Structured response with source references and operator notes
 
-To learn more about Next.js, take a look at the following resources:
+Supabase offers the data layer for:
+- policies
+- interaction history
+- feedback
+- later RBAC/tenant expansion
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Vercel hosts the application and provides a simple deployment path.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## AI / Grounding Strategy
 
-## Deploy on Vercel
+The model is not the source of truth. The center’s policy database is.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The LLM is used only to interpret the parent’s question, identify the likely relevant policy, and communicate the result naturally. The generated answer must remain grounded in the supplied policy set. The system should prefer a clear escalation when the answer is missing or unsafe.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
->>>>>>> beccecb (Initial commit from Create Next App)
+This approach is intentionally simple and trustworthy for a small center-specific policy corpus.
+
+## Why no vector database?
+
+This prototype has a small, structured policy corpus rather than a large document library. For a tiny center-specific dataset, deterministic retrieval is cheaper, easier to inspect, easier to trust, and easier to debug.
+
+At scale, the next evolution would be:
+- handbook chunking
+- embeddings
+- hybrid keyword + semantic retrieval
+- reranking
+- evaluation harnesses for answer quality
+
+## Safety
+
+Safety is a core product principle.
+
+- grounding: answer only from provided policy records
+- uncertainty: escalate when the answer is unclear or unavailable
+- medical sensitivity: do not diagnose illness or provide individualized medical advice
+- escalation: for emergencies, direct users to emergency services
+- prompt injection: refuse hidden instruction requests and keep the answer on the policy surface
+- data privacy: do not request unnecessary personal information; store only operational questions and not child-specific details
+
+A real production implementation would also need retention controls, access control, audit logging, and privacy compliance review.
+
+## Operator Feedback Loop
+
+Questions
+→ Quality signal
+→ Needs attention queue
+→ Policy improvement
+→ Better future answers
+
+This prototype intentionally surfaces where the system struggled. Unanswered or risky questions become action for the operator rather than fake confidence.
+
+## Tradeoffs
+
+This was intentionally not built:
+- sophisticated RAG pipelines
+- production authentication and RBAC
+- multi-center tenancy sophistication
+- full document ingestion
+- advanced analytics dashboards
+- production privacy/compliance controls
+
+## What I’d Build Next
+
+1. Operator authentication and RBAC
+2. Handbook/document ingestion
+3. Hybrid semantic retrieval
+4. Automated evaluation suite
+5. Quality dashboards
+6. Human escalation and contact workflow
+7. Multi-center tenancy
+8. Privacy and retention controls
+9. Voice improvements
+10. Usage and cost monitoring
+
+## Local development
+
+1. Copy .env.example to .env.local and add your Supabase and API keys.
+2. Run npm install.
+3. Run npm run dev.
+4. Open http://localhost:3000.
+5. Visit /admin for the operator dashboard.
+
+## Deployment to Vercel
+
+1. Push the repo to GitHub.
+2. Import the repo in Vercel.
+3. Add the same environment variables from .env.example.
+4. Deploy.
+5. Confirm the app builds successfully and the admin dashboard loads.
+
+## AI Front Desk in one sentence
+
+This product treats the center’s policy records as the trusted source of truth and uses AI to interpret the parent’s question, communicate clearly, and escalate uncertainty rather than pretending it knows more than it does.
