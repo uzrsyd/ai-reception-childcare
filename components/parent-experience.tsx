@@ -150,29 +150,29 @@ export function ParentExperience() {
 
   return (
     <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-4 pb-12 pt-6 sm:px-6 lg:px-8">
-      <header className="mb-6 rounded-[28px] border border-stone-200 bg-white/90 p-4 shadow-sm backdrop-blur sm:p-6">
+      <header className="mb-6 rounded-[32px] border border-[#dfe9e5] bg-white/95 p-4 shadow-[0_16px_35px_rgba(29,42,47,0.06)] backdrop-blur sm:p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <div className="mb-2 inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700 ring-1 ring-emerald-200">
+            <div className="mb-2 inline-flex items-center rounded-full bg-[#eaf5f2] px-2.5 py-1 text-[11px] font-medium text-[#2d5a55] ring-1 ring-[#cfe4de]">
               <ShieldCheck className="mr-1 h-3.5 w-3.5" />
-              BrightPath Early Learning
+              BrightPath Family Support
             </div>
-            <h1 className="text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
-              AI Front Desk
+            <h1 className="text-2xl font-semibold tracking-tight text-[#18343a] sm:text-3xl">
+              Front Desk Support
             </h1>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <div className="flex items-center gap-2 rounded-full border border-stone-200 bg-stone-50 px-3 py-2 text-xs text-stone-600">
-              <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-              Answers are based on BrightPath&apos;s current center policies.
+            <div className="flex items-center gap-2 rounded-full border border-[#e1e5e2] bg-[#f7faf9] px-3 py-2 text-xs text-[#47555d]">
+              <CheckCircle2 className="h-4 w-4 text-[#2f8c7a]" />
+              Policy-backed answers for parents and staff.
             </div>
-            <Link href="/admin" className="rounded-full border border-stone-200 bg-white px-3 py-2 text-xs font-medium text-stone-700 transition hover:bg-stone-50">
+            <Link href="/admin" className="rounded-full border border-[#dfe9e5] bg-white px-3 py-2 text-xs font-medium text-[#20353d] transition hover:bg-[#f7faf9]">
               Operator dashboard
             </Link>
           </div>
         </div>
-        <p className="mt-4 max-w-2xl text-sm text-stone-600 sm:text-base">
-          Ask about hours, policies, meals, enrollment, tours and more.
+        <p className="mt-4 max-w-2xl text-sm text-[#526066] sm:text-base">
+          Ask about center hours, meals, pickup, tours, enrollment, and illness guidance using BrightPath&apos;s trusted policy set.
         </p>
       </header>
 

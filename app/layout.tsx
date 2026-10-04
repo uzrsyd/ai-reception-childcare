@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BrightPath AI Front Desk",
-  description: "A trustworthy childcare front desk assistant for parents and staff.",
+  title: "BrightPath Family Support",
+  description: "A trustworthy childcare front desk experience for parent support and staff operations.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -23,7 +23,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-stone-100 text-stone-900">{children}</body>
+      <body className="min-h-full bg-transparent text-stone-900">{children}</body>
     </html>
   );
 }
